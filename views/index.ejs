@@ -1,0 +1,55 @@
+<%- include("partials/header") %>
+
+<div class="container">
+    <br/>
+	<div class="row justify-content-center ">
+                        <div class="col-12 col-md-10 col-lg-8">
+                            <form class="card card-sm" action="/search" method="POST">
+                                <div class="card-body row no-gutters align-items-center">
+                                    <div class="col-auto">
+                                        <i class="fas fa-search h4 text-body m-1"></i>
+                                    </div>
+                                   
+                                    <div class="col">
+                                        <input class="form-control form-control-lg form-control-borderless" name="userSrc" id="userSrc" type="text" placeholder="Search for movies or shows">
+                                    </div>
+                                    
+                                    <div class="col-auto">
+                                        <button class="btn btn-lg btn-success" type="submit">Search</button>
+                                    </div>
+                                   
+                                </div>
+                            </form>
+                        </div>
+                        
+                    </div>
+        <div class="col-md-12 pt-3 ">
+            <div class="row justify-content-center">
+            <% if(typeof(result) !== "undefined" ) {%>
+            <% if(Object.keys(result) > 1 ){ %>
+            <% result.forEach(result => { %>
+            <div class="col-xs-12 col-md-6 col-lg-3 p-2 m-2">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="<%=result.Poster%>" alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text"><%=result.Title%></p>
+                  <a href="/search/<%=result.imdbID%>" class="btn btn-primary">More</a>
+                </div>
+              </div>
+            </div>
+        <%})}else{ %>
+            <div class="col-xs-12 col-md-6 col-lg-3 p-2 m-2">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="<%=result.Poster%>" alt="Card image cap">
+                    <div class="card-body">
+                      <p class="card-text"><%=result.Title%></p>
+                      <a href="/search/<%=result._id%>" class="btn btn-primary">More</a>
+                    </div>
+                  </div>
+                </div>
+
+        <%}}%>
+        </div>
+    </div>
+</div>
+<%- include("partials/footer") %>
