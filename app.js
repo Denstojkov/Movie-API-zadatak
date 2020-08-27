@@ -37,6 +37,8 @@ app.post("/search", (req, res) => {
       fetch("http://www.omdbapi.com/?s=" + search + "&apikey=b322e698")
         .then(response => response.json())
         .then(data => {
+		  console.log("API RESPONSE");
+		  console.log(data.Search);
           res.render("index", {
             result: data.Search
           });

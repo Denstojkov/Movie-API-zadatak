@@ -10,7 +10,8 @@
     "method-override": "^3.0.0",
     "mongoose": "^5.10.0",
     "node-fetch": "^2.6.0",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "pkg.json": "^2.0.8"
   },
   "devDependencies": {},
   "scripts": {
