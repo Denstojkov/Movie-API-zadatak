@@ -28,21 +28,44 @@ app.get("/", (req, res) => {
 
 app.post("/search", (req, res) => {
   let search = req.body.userSrc;
-  
+  console.log(search);
 
   Recent.findOne({
     Title: search
   }, (err, foundData) => {
     if (err || foundData == null) {
+		
       fetch("http://www.omdbapi.com/?s=" + search + "&apikey=b322e698")
         .then(response => response.json())
         .then(data => {
-		  console.log("API RESPONSE");
-		  console.log(data.Search);
+		  
+		  let test = [];
+		  let result = data.Search;
+		  
+		  result.forEach(function(data){
+			  
+			 if(Recent.findOne({
+    			Title: data.Title
+  			},(err,found) => {
+				 if(err){
+					 console.log(err);
+				 }else if(found){
+					console.log("-----------------");
+					 console.log(found);
+					
+				 }
+				 
+				 
+				 
+			 }  ));
+			
+		  test.push(data);
+		  })
+		 console.log(test);
           res.render("index", {
-            result: data.Search
+            result: test
           });
-        });
+        })
     } else {
 
       
@@ -97,7 +120,6 @@ app.get("/search/:id", (req, res) => {
 
 app.post("/quicksearch", (req, res) => {
   let search = req.body.userSrc;
-  console.log(search);
 
   Recent.findOne({
     Title: search
@@ -106,8 +128,6 @@ app.post("/quicksearch", (req, res) => {
       fetch("http://www.omdbapi.com/?s=" + search + "&apikey=b322e698")
         .then(response => response.json())
         .then(data => {
-		  console.log("API RESPONSE");
-		  console.log(data.Search);
           res.send({
             result: data.Search
           });

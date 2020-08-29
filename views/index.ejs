@@ -18,11 +18,20 @@
                                     <div class="col-auto">
                                         <button class="btn btn-lg btn-success" type="submit">Search</button>
                                     </div>
-
+									
                                    
                                     
                                 </div>
-                            </form>
+								</form>
+								<div id="quickresult" class="card-body row no-gutters align-items-center">
+										<div class="col ">
+											<form action="/search" method="POST">
+										<select multiple id="result" class="form-control" name="userSrc" onchange='this.form.submit()'>
+    									</select>
+											</form>
+									</div>
+									</div>
+                            
                         </div>
                         
                     </div>
@@ -31,6 +40,7 @@
             <% if(typeof(result) !== "undefined" ) {%>
 				
             <% if(result.length > 1  ){ %>
+				
             <% result.forEach(result => { %>
             <div class="col-xs-12 col-md-6 col-lg-3 p-2 m-2">
             <div class="card" style="width: 18rem;">

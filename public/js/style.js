@@ -1,4 +1,5 @@
 $(function() {
+	$("#quickresult").hide();
     $("#userSrc").keyup(function() {
         let dInput = $("#userSrc").val();
         if(dInput.length >2){
@@ -10,17 +11,19 @@ $(function() {
             },
             dataType: 'json',
             success: function(response) {
-                let html = '';
-                
+                let html;
+                $("#quickresult").show();
                 response.result.forEach(element => {
-                    console.log(element.Title);
-                    html += "<h2>" + element.Title + "</h2>";
+                    
+                    html += "<option value=" + "'" + element.Title +"'" + ">" + element.Title + "<option>";
                     
                     
-                    $("#userSrc").html(html);
+                    $("#result").html(html);
                 });
             }
         });
     }
     });
+	
 });
+
