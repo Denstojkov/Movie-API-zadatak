@@ -87,7 +87,7 @@ app.get("/search/:id", (req, res) => {
     if (err || found == null) {
       fetch("http://www.omdbapi.com/?s=" + result + "&apikey=b322e698").then(response => response.json())
         .then(data => {
-          console.log(data.Search[0].Title)
+       
           let contentAbout = {
             Title: data.Search[0].Title,
             Year: data.Search[0].Year,
@@ -108,7 +108,7 @@ app.get("/search/:id", (req, res) => {
               });
             }
           });
-        }).catch((error) =>{res.redirect("back"); });
+        }).catch(res.redirect("back"));
     } else {
       console.log("Found in Local Database");
       res.render("about", {about:found});
