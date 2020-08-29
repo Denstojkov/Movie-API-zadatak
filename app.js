@@ -12,7 +12,7 @@ app = express();
 app.set("view engine", "ejs");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-  extended: true
+  extended: false
 }));
 app.use(express.static(__dirname + "/public/"));
 
@@ -21,14 +21,14 @@ mongoose.connect("mongodb://localhost:27017/serapion", {
   useCreateIndex: true,
   useUnifiedTopology: true,
 });
-
+ 
 app.get("/", (req, res) => {
   res.render("index");
 });
 
 app.post("/search", (req, res) => {
   let search = req.body.userSrc;
-
+  
 
   Recent.findOne({
     Title: search
@@ -90,6 +90,36 @@ app.get("/search/:id", (req, res) => {
 
 
 
+  });
+
+
+});
+
+app.post("/quicksearch", (req, res) => {
+  let search = req.body.userSrc;
+  console.log(search);
+
+  Recent.findOne({
+    Title: search
+  }, (err, foundData) => {
+    if (err || foundData == null) {
+      fetch("http://www.omdbapi.com/?s=" + search + "&apikey=b322e698")
+        .then(response => response.json())
+        .then(data => {
+		  console.log("API RESPONSE");
+		  console.log(data.Search);
+          res.send({
+            result: data.Search
+          });
+        });
+    } else {
+
+      
+      console.log("Found Local");
+      res.send( {
+        result: foundData
+      });
+    }
   });
 
 
