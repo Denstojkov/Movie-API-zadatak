@@ -70,8 +70,9 @@ app.post("/search", (req, res) => {
 
       
       console.log("Found Local");
+      console.log(foundData);
       res.render("index", {
-        result: foundData
+        local: foundData
       });
     }
   });
@@ -81,19 +82,21 @@ app.post("/search", (req, res) => {
 
 app.get("/search/:id", (req, res) => {
   let result = req.params.id;
-  Recent.findById(result, (err, found) => {
+  console.log(result);
+  Recent.findOne({Title:result}, (err, found) => {
     if (err || found == null) {
-      fetch("http://www.omdbapi.com/?i=" + result + "&apikey=b322e698").then(response => response.json())
+      fetch("http://www.omdbapi.com/?s=" + result + "&apikey=b322e698").then(response => response.json())
         .then(data => {
+          console.log(data.Search[0].Title)
           let contentAbout = {
-            Title: data.Title,
-            Year: data.Year,
-            Genre: data.Genre,
-            Actors: data.Actors,
-            Plot: data.Plot,
-            Poster: data.Poster
+            Title: data.Search[0].Title,
+            Year: data.Search[0].Year,
+            Genre: data.Search[0].Genre,
+            Actors: data.Search[0].Actors,
+            Plot: data.Search[0].Plot,
+            Poster: data.Search[0].Poster
           };
-
+          
           Recent.create(contentAbout, (err, created) => {
             if (err) {
               console.log(err);
@@ -105,7 +108,7 @@ app.get("/search/:id", (req, res) => {
               });
             }
           });
-        });
+        }).catch((error) =>{res.redirect("back"); });
     } else {
       console.log("Found in Local Database");
       res.render("about", {about:found});
