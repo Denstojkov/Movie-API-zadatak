@@ -3,9 +3,13 @@ const express = require("express"),
   mongoose = require("mongoose"),
   ejs = require("ejs"),
   fetch = require('node-fetch'),
+  swaggerJSDoc = require("swagger-jsdoc"),
+  swaggerUI = require("swagger-ui-express"),
   methodOvveride = require("method-override"),
   Recent = require("./models/recent");
 app = express();
+
+
 
 
 
@@ -21,6 +25,7 @@ mongoose.connect("mongodb://localhost:27017/serapion", {
   useCreateIndex: true,
   useUnifiedTopology: true,
 });
+
  
 app.get("/", (req, res) => {
   res.render("index");
@@ -38,34 +43,11 @@ app.post("/search", (req, res) => {
       fetch("http://www.omdbapi.com/?s=" + search + "&apikey=b322e698")
         .then(response => response.json())
         .then(data => {
-		  
-		  let test = [];
-		  let result = data.Search;
-		  
-		  result.forEach(function(data){
-			  
-			 if(Recent.findOne({
-    			Title: data.Title
-  			},(err,found) => {
-				 if(err){
-					 console.log(err);
-				 }else if(found){
-					console.log("-----------------");
-					 console.log(found);
-					
-				 }
-				 
-				 
-				 
-			 }  ));
-			
-		  test.push(data);
-		  })
-		 console.log(test);
+          console.log(data);
           res.render("index", {
-            result: test
+            result: data.Search
           });
-        })
+        });
     } else {
 
       
@@ -83,32 +65,34 @@ app.post("/search", (req, res) => {
 app.get("/search/:id", (req, res) => {
   let result = req.params.id;
   console.log(result);
-  Recent.findOne({Title:result}, (err, found) => {
+  Recent.findOne({ID:result}, (err, found) => {
     if (err || found == null) {
-      fetch("http://www.omdbapi.com/?s=" + result + "&apikey=b322e698").then(response => response.json())
+      fetch("http://www.omdbapi.com/?i=" + result + "&apikey=b322e698").then(response => response.json())
         .then(data => {
        
           let contentAbout = {
-            Title: data.Search[0].Title,
-            Year: data.Search[0].Year,
-            Genre: data.Search[0].Genre,
-            Actors: data.Search[0].Actors,
-            Plot: data.Search[0].Plot,
-            Poster: data.Search[0].Poster
+            ID: data.imdbID,
+            Title: data.Title,
+            Year: data.Year,
+            Genre: data.Genre,
+            Actors: data.Actors,
+            Plot: data.Plot,
+            Poster: data.Poster
           };
           
+          console.log(contentAbout);
           Recent.create(contentAbout, (err, created) => {
             if (err) {
               console.log(err);
             } else {
               console.log("Newly Created");
-              console.log(created);
+              
               res.render("about", {
                 about: created
               });
             }
           });
-        }).catch(res.redirect("back"));
+        }).catch();
     } else {
       console.log("Found in Local Database");
       res.render("about", {about:found});
