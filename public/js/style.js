@@ -2,7 +2,7 @@ $(function() {
 	$("#quickresult").hide();
     $("#userSrc").keyup(function() {
         let dInput = $("#userSrc").val();
-        if(dInput.length >2){
+        if(dInput.length >3){
         $.ajax({
             type: 'POST',
             url: '/quicksearch',
