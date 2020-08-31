@@ -15,15 +15,15 @@ router.post("/", (req, res) => {
         fetch("http://www.omdbapi.com/?s=" + inputSearchResult + "&apikey=b322e698")
           .then(response => response.json())
           .then(apiResponse => {
-            console.log(apiResponse);
+            
             res.render("index", {
               result: apiResponse.Search
             });
           }).catch((error) =>{
-
+              console.log(error);
           });
       } else {
-        console.log("Found in DB");
+        console.log("Title found in local database");
         res.render("index", {
           local: foundData
         });

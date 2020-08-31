@@ -8,7 +8,6 @@ Recent = require("../models/recent"),
 
   router.post("/", (req, res) => {
     let ajaxSearchResult = req.body.userSrc;
-    console.log(ajaxSearchResult);
     Recent.findOne({
       Title: ajaxSearchResult
     }, (err, foundData) => {
@@ -23,7 +22,7 @@ Recent = require("../models/recent"),
       } else {
   
         
-        console.log("Found Local");
+        console.log("Found Title in Local database");
         res.send( {
           result: foundData
         });

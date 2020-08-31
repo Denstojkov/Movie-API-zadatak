@@ -8,6 +8,7 @@ const express = require("express"),
   methodOvveride = require("method-override"),
   Recent = require("./models/recent"),
   Search = require('./routes/search'),
+  dotenv = require('dotenv').config(),
   ajaxQuickSearch = require('./routes/ajaxQuickSearch'),
   searchGetID = require('./routes/searchGetID');
   app = express();
@@ -20,7 +21,8 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static(__dirname + "/public/"));
 
-mongoose.connect("mongodb://localhost:27017/serapion", {
+
+mongoose.connect(process.env.db, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true,
@@ -37,6 +39,6 @@ app.get("/", (req, res) => {
 });
 
 
-app.listen(80, function () {
-  console.log("Server on 80");
+app.listen(3000, function () {
+  console.log("Server on 3000");
 });
