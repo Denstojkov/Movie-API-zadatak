@@ -25,14 +25,12 @@ paths:
   /search/{id}: 
     get:
       summary: Returns detailed response about a show or a movie 
-      description: If user is reading detailed information about show or movie for the first time, the information is saved to a local database.
+      description: If user is reading detailed information about show or movie for the first time, the information is saved to a local database. Example "tt017001"
       parameters:
         - in: path
           name: id
           required: true
           type: string
-          minimum: 1
-          description: Parameter description in Markdown.
       produces:
         - application/json
 

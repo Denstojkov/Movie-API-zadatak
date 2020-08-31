@@ -5,6 +5,7 @@ const express = require("express"),
   fetch = require('node-fetch'),
   swaggerJSDoc = require("swagger-jsdoc"),
   methodOvveride = require("method-override"),
+  cors = require('cors'),
   Recent = require("./models/recent"),
   Search = require('./routes/search'),
   dotenv = require('dotenv').config(),
@@ -14,6 +15,7 @@ const express = require("express"),
   router = express.Router();
 
 app.set("view engine", "ejs");
+app.use(cors())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false

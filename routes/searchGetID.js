@@ -8,6 +8,7 @@ Recent = require("../models/recent"),
 
 router.get("/:id", (req, res) => {
     let findByID = req.params.id;
+    console.log(findByID);
     Recent.findOne({ID:findByID}, (err, found) => {
       if (err || found == null) {
         fetch("http://www.omdbapi.com/?i=" + findByID + "&apikey=b322e698").then(response => response.json())

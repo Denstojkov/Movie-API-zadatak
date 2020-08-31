@@ -8,6 +8,7 @@ Recent = require("../models/recent"),
 
 router.post("/", (req, res) => {
     let inputSearchResult = req.body.userSrc;
+    console.log(inputSearchResult);
     Recent.findOne({
       Title: inputSearchResult
     }, (err, foundData) => {
