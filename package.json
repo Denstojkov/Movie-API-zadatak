@@ -14,8 +14,7 @@
     "node-fetch": "^2.6.0",
     "nodemon": "^2.0.4",
     "pkg.json": "^2.0.8",
-    "swagger-jsdoc": "^4.0.0",
-    "swagger-ui-express": "^4.1.4"
+    "swagger-jsdoc": "^4.0.0"
   },
   "devDependencies": {},
   "scripts": {
